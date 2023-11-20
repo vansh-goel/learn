@@ -26,9 +26,8 @@ import {
 } from "@/components/ui/navigation-menu"
 
 export function Navbar() {
-  const { setTheme } = useTheme()
+  const { theme,setTheme } = useTheme()
   return (
-    <>
     <nav className="flex items-center justify-between flex-1 mx-auto mt-4 border-white/70 w-[95%] sticky h-14 top-3 rounded-full inset-x-0 z-30 border-gray-200 bg-black/80 dark:bg-white/95 dark:text-black background-blur-lg transition-all px-5">
       <h1 className="border-b border-zinc-200 m-4 text-white dark:text-black font-mono font-semibold col-span-1 col-start-1">
         Le/-\rn
@@ -85,7 +84,6 @@ export function Navbar() {
     </NavigationMenu>
       </span>
     </nav>
-    </>
   )
 }
 

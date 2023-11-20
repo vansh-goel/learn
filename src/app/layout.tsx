@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 }
 
 import { ReactNode } from 'react'
+import Providers from '@/components/Providers'
 
 type RootLayoutProps = {
   children: ReactNode
@@ -23,19 +24,21 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <>
       <html lang="en" suppressHydrationWarning>
         <head />
-        <body className={cn(
-          'min-h-screen font-sans antialiased grainy', inter.className
-        )}
->
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </body>
+        <Providers>
+          <body className={cn(
+            'min-h-screen font-sans antialiased grainy', inter.className
+            )}
+  >
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+              >
+              {children}
+            </ThemeProvider>
+          </body>
+        </Providers>
       </html>
     </>
   )
