@@ -25,7 +25,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body className={cn(
           'min-h-screen font-sans antialiased grainy', inter.className
-        )}>
+        )}
+>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
