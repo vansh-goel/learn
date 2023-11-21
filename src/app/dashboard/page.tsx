@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 import { db } from '@/db'
 import Dashboard from '@/components/Dashboard'
+import Navbar from '@/components/Navbar'
 
 const Page = async () => {
     const { getUser } = getKindeServerSession()
@@ -19,7 +20,10 @@ const Page = async () => {
     if(!dbUser) redirect('/auth-callback?origin=dashboard')
 
     return (
-        <Dashboard />
+        <>
+            <Navbar />
+            <Dashboard />
+        </>
     )
 }
 

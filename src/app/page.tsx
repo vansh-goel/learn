@@ -26,7 +26,7 @@ export function Home() {
           size: "lg",
           className: "mt-8"
         })} href="/dashboard" target="_blank">
-          Get Started <ArrowRight className="ml-2 h-5 w-5" size={20} />
+          Dashboard <ArrowRight className="ml-2 h-5 w-5" size={20} />
       </Link>
       </div>
        <div>

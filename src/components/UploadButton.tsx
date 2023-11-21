@@ -14,7 +14,7 @@ const UploadButton = () => {
             }
         }} >
             <DialogTrigger onClick={() => setIsOpen(true)} asChild>
-                <Button>Upload pdf</Button>
+                <Button>Add Playlist</Button>
             </DialogTrigger>
 
             <DialogContent>

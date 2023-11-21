@@ -16,6 +16,25 @@ datasource db {
 }
 
 model User {
-  id    String @id @unique
-  email String @unique
+  id        String     @id @unique
+  email     String     @unique
+  playlists Playlist[]
+}
+
+model Playlist {
+  id          String  @id @unique
+  title       String
+  description String
+  userId      String
+  user        User    @relation(fields: [userId], references: [id])
+  videos      Video[]
+}
+
+model Video {
+  id          String   @id @unique
+  title       String
+  description String
+  watched     Boolean
+  playlistId  String
+  playlist    Playlist @relation(fields: [playlistId], references: [id])
 }
