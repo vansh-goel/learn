@@ -102,25 +102,25 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ params }) => {
   return (
     <MaxWidthWrapper>
     <Navbar />
-    <div className='grid gap-4 p-2 m-2 grid-flow-row lg:grid-flow-col sm:grid-flow-row lg:grid-cols-8 lg:divide-x lg:divide-gray-600 grid-cols-1 divide-y lg:divide-y-0 grid-rows-8 w-fit'>
+    <div className='grid gap-4 p-2 m-2 grid-flow-row lg:grid-flow-col sm:grid-flow-row lg:grid-cols-8 lg:divide-x lg:divide-gray-600 grid-cols-1 divide-y lg:divide-y-0 grid-rows-8 w-fit text-center content-center'>
     <div id='box-1' className='col-span-1 row-span-2 lg:col-span-2 p-2 m-2 divide-y-2 divide-black/50 content'>
         <h1 className='mb-2 text-xl font-semibold'>{playlistData.title}</h1>
         <p className='mt-4 pt-4'>{playlistData.description}</p>
         
     </div>
 
-      <ul id='box-2' className='ml-2 grid col-span-6 flex-wrap flex-col px-4 mx-4 sm:row-span-6'>
+      <ul id='box-2' className='ml-2 lg:grid lg:col-span-6 flex-wrap flex-col px-4 mx-4 sm:row-span-6 text-center'>
         {playlistItems.map(item => (
             <li key={item.videoId} className='grid wrap grid-row-2 grid-flow-row md:grid-col-8 md:grid-flow-col content-center py-2'>
             {videoDetailsMap[item.videoId] ? (
-                <div className='grid wrap grid-col-1 grid-rows-2 grid-flow-row md:grid-col-8 md:grid-flow-col content-center py-2 lg:grid-rows-1 md:grid-rows-1'>
+                <div className='grid wrap grid-col-1 grid-rows-2 grid-flow-row md:grid-col-8 md:grid-flow-col lg:grid-col-8 content-center py-2 lg:grid-rows-1 md:grid-rows-1'>
                 <img
-                    className='w-48 h-36 col-span-1 row-span-1 md:col-span-2 rounded-lg border-2 border-black/50 p-2'
+                    className='w-48 h-36 col-span-1 row-span-1 md:col-span-3 md:row-auto md:order-1 rounded-lg border-2 border-black/50 p-2 place-self-center lg:place-self-start md:place-self-start'
                   src={videoDetailsMap[item.videoId].thumbnailURL}
                   alt="Video thumbnail"
                 />
                 <a
-                    className='p-2 col-span-1 row-span-1 md:col-span-6 lg:col-span-6 content-center grid lg:col-start-3'
+                    className='p-2 col-span-1 row-span-1 md:col-span-5 md:order-2 content-center grid md:w-[100%] sm:w-[60%] text-center align-self-center place-self-center lg:place-self-center'
                   href={`https://www.youtube.com/watch?v=${item.videoId}`}
                   target="_blank"
                   rel="noopener noreferrer"
