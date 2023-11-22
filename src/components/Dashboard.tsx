@@ -3,8 +3,10 @@ import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import Form from './Form'
 import { useEffect } from 'react'
 import React, { useState } from 'react';
+import { trpc } from '@/app/_trpc/client';
 
 const Dashboard = () => {
+  const { data: playlists } = trpc.getPlaylists.useQuery()
   const [playlistTitle, setPlaylistTitle] = useState<string>('');
   const [playlistLink, setPlaylistLink] = useState('');
   const [playlistID, setPlaylistID] = useState('');
