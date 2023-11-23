@@ -49,7 +49,6 @@ export const appRouter = router({
       title: z.string(),
     })).mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
-
       return await db.playlist.create({
         data: {
           userId,
@@ -58,7 +57,18 @@ export const appRouter = router({
           title: input.title,
         },
       });
-
-  })
+  }),
+  deletePlaylist: privateProcedure.input(
+    z.object({
+      playlistId: z.string(),
+    })).mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      return await db.playlist.delete({
+        where: {
+            userId,
+            playlistId: input.playlistId,
+        },
+      });
+  }),
 });
 export type AppRouter = typeof appRouter;

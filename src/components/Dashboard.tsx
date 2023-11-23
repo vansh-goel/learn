@@ -5,10 +5,19 @@ import { useEffect } from 'react'
 import React, { useState } from 'react';
 import { trpc } from '@/app/_trpc/client';
 import axios from 'axios';
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
+import { Button, buttonVariants } from './ui/button';
+
 
 const Dashboard = () => {
   
   const createPlaylistMutation = trpc.createPlaylist.useMutation();
+  const deletePlaylistMutation = trpc.deletePlaylist.useMutation();
   interface PlaylistInput {
     playlistId: string;
     title: string;
@@ -82,6 +91,7 @@ const Dashboard = () => {
     }
   };
 
+
   const  handleCreatePlaylist = () => { createPlaylistMutation.mutate({
     playlistId: playlistID,
     description: playlistDescription,
@@ -89,6 +99,19 @@ const Dashboard = () => {
   });
   }
 
+  const handleDeletePlaylist = async (playlistID: string) => {
+    try {
+      await deletePlaylistMutation.mutateAsync({ playlistId: playlistID });
+      setPlaylistIDs((prevIDs) => prevIDs.filter((id) => id !== playlistID));
+      setPlaylistTitles((prevTitles) => {
+        const newTitles = { ...prevTitles };
+        delete newTitles[playlistID];
+        return newTitles;
+      });
+    } catch (error) {
+      console.error("Error deleting playlist:", error);
+    }
+  };
 
   return (
     <MaxWidthWrapper className='mx-auto max-w-7xl md:p-10 '>
@@ -98,9 +121,21 @@ const Dashboard = () => {
       <Form playlistLink={playlistLink} setPlaylistLink={setPlaylistLink} />
       <ul className='grid gap-4 py-2 my-2 wrap grid-cols-1 md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-5 grid-flow-row'>
         {playlistIDs.map((id) => (
-          <li key={id} className='grid dark:border-gray-100 justify-center grid-flow-col border-2 border-black w-48 p-2 text-center content-center col-span-1 place-self-center md:place-self-auto'>
-            <a href={`/playlist/${id}`}>{playlistTitles[id]}</a>
+        <ContextMenu>
+          <ContextMenuTrigger className='grid dark:border-gray-100 justify-center grid-flow-col border-2 border-black w-48 p-2 text-center content-center col-span-1 place-self-center md:place-self-auto'>
+          <li key={id} className='grid justify-center grid-flow-col w-48 p-2 text-center content-center col-span-1 place-self-center md:place-self-auto'>
+          <a href={`/playlist/${id}`}>{playlistTitles[id]}</a>
           </li>
+          </ContextMenuTrigger>
+              <ContextMenuContent>
+                <ContextMenuItem className='p-2 m-2'>
+                  <Button variant="secondary" size="lg" className="bg-red-800 hover:bg-red-500 text-semibold text-white transition-all" onClick={() => handleDeletePlaylist(id)}>
+                    Delete
+                  </Button>
+                </ContextMenuItem>
+              </ContextMenuContent>
+          </ContextMenu>
+
         ))}
       </ul>
     </MaxWidthWrapper>
