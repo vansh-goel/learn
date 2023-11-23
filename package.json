@@ -30,6 +30,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.3.1",
+    "react-spinners": "^0.13.8",
     "server": "link:@kinde-oss/kinde-auth-nextjs/dist/types/server",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '@/components/Navbar';
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
+import { BarLoader } from 'react-spinners';
+
 
 interface PlaylistItem {
   videoId: string;
@@ -96,7 +98,14 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ params }) => {
   };
 
   if (!playlistData || !playlistItems) {
-    return <div>Loading...</div>;
+    return <div className='grid place-content-center w-screen h-screen'>
+      <BarLoader
+      color='rgba(196, 235, 227, 1)'
+        loading={true}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+    </div>;
   }
 
   return (
@@ -129,7 +138,14 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ params }) => {
                 </a>
               </div>
             ) : (
-              <div>Loading video details...</div>
+              <div>
+                <BarLoader
+                  color='rgba(196, 235, 227, 1)'
+                  loading={true}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
               )}
           </li>
         ))}
