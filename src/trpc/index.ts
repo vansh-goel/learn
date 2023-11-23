@@ -2,6 +2,7 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { privateProcedure, publicProcedure, router } from './trpc';
 import { TRPCError } from '@trpc/server';
 import { db } from '@/db';
+import { z } from 'zod';
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -39,6 +40,25 @@ export const appRouter = router({
           userId
         }
       })
-    })
-  });
+    }),
+
+  createPlaylist: privateProcedure.input(
+    z.object({
+      playlistId: z.string(),
+      description: z.string(),
+      title: z.string(),
+    })).mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+
+      return await db.playlist.create({
+        data: {
+          userId,
+          playlistId: input.playlistId,
+          description: input.description,
+          title: input.title,
+        },
+      });
+
+  })
+});
 export type AppRouter = typeof appRouter;

@@ -22,19 +22,20 @@ model User {
 }
 
 model Playlist {
-  id          String  @id @unique
+  id          Int     @id @unique @default(autoincrement())
+  playlistId  String  @unique
   title       String
   description String
   userId      String
   user        User    @relation(fields: [userId], references: [id])
-  videos      Video[]
+  vuideos     Video[]
 }
 
 model Video {
-  id          String   @id @unique
+  id          String    @id @unique
   title       String
   description String
   watched     Boolean
-  playlistId  String
-  playlist    Playlist @relation(fields: [playlistId], references: [id])
+  Playlist    Playlist? @relation(fields: [playlistId], references: [id])
+  playlistId  Int?
 }

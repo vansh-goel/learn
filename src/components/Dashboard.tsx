@@ -4,20 +4,50 @@ import Form from './Form'
 import { useEffect } from 'react'
 import React, { useState } from 'react';
 import { trpc } from '@/app/_trpc/client';
+import axios from 'axios';
 
 const Dashboard = () => {
-  const { data: playlists } = trpc.getPlaylists.useQuery()
+  
+  const createPlaylistMutation = trpc.createPlaylist.useMutation();
+  interface PlaylistInput {
+    playlistId: string;
+    title: string;
+    description: string;
+  }
+
+
+  const [newPlaylistData, setNewPlaylistData] = useState<PlaylistInput | null>(null);
   const [playlistTitle, setPlaylistTitle] = useState<string>('');
-  const [playlistLink, setPlaylistLink] = useState('');
+  const [playlistTitles, setPlaylistTitles] = useState<Record<string, string>>({});
   const [playlistID, setPlaylistID] = useState('');
   const [playlistIDs, setPlaylistIDs] = useState<string[]>([]);
-  const [playlistTitles, setPlaylistTitles] = useState<Record<string, string>>({});
+  const [playlistLink, setPlaylistLink] = useState('');
+  const [playlistDescription, setPlaylistDescription] = useState<string>('');
+
+    trpc.getPlaylists.useQuery(undefined, {
+    onSuccess: (data) => {
+      const playlistIDs = data.map((playlist) => playlist.playlistId);
+      setPlaylistIDs(playlistIDs);
+      const newPlaylistTitles = data.reduce((acc, playlist) => {
+        acc[playlist.playlistId] = playlist.title;
+        return acc;
+      }, {} as Record<string, string>);
+      setPlaylistTitles(newPlaylistTitles);
+    },
+  })
 
   useEffect(() => {
     if (playlistLink) {
       fetchPlaylistInfo();
     }
   }, [playlistLink]);
+
+  useEffect(() => {
+    if (newPlaylistData) {
+      handleCreatePlaylist();
+    }
+  }, [newPlaylistData])
+
 
   const handlePlaylistLinkChange = (newPlaylistLink: string) => {
     setPlaylistLink(newPlaylistLink);
@@ -29,22 +59,36 @@ const Dashboard = () => {
     if (match) {
       const newPlaylistID = match[1];
       const playlistInfoURL = `https://inv.in.projectsegfau.lt/api/v1/playlists/${newPlaylistID}/`;
-      const response = await fetch(playlistInfoURL);
-      const playlistData = await response.json();
+      const response = await axios.get(playlistInfoURL);
+      const playlistData = response.data;
       setPlaylistTitle(playlistData.title);
+      setPlaylistDescription(playlistData.description);
+      setPlaylistID(newPlaylistID);
 
+      setNewPlaylistData({
+        playlistId: newPlaylistID,
+        title: playlistData.title,
+        description: playlistData.description,
+      })
       // Update the state to store the mapping of ID to title
       setPlaylistTitles((prevTitles) => ({
         ...prevTitles,
         [newPlaylistID]: playlistData.title,
       }));
 
-      setPlaylistID(newPlaylistID);
-      setPlaylistIDs([...playlistIDs, newPlaylistID]);
+    setPlaylistIDs([...playlistIDs, newPlaylistID]);
     } else {
       console.error('Invalid playlist link');
     }
   };
+
+  const  handleCreatePlaylist = () => { createPlaylistMutation.mutate({
+    playlistId: playlistID,
+    description: playlistDescription,
+    title: playlistTitle,
+  });
+  }
+
 
   return (
     <MaxWidthWrapper className='mx-auto max-w-7xl md:p-10 '>
@@ -52,9 +96,9 @@ const Dashboard = () => {
         <h1 className='font-bold text-5xl text-gray-900 mb-3 dark:text-white'>My Courses</h1>
       </div>
       <Form playlistLink={playlistLink} setPlaylistLink={setPlaylistLink} />
-      <ul className='flex gap-4 py-2 my-2'>
+      <ul className='grid gap-4 py-2 my-2 wrap grid-cols-1 md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-5 grid-flow-row'>
         {playlistIDs.map((id) => (
-          <li key={id} className='flex dark:border-gray-100 justify-center flex-col border-2 border-black w-48 p-2 text-center wrap'>
+          <li key={id} className='grid dark:border-gray-100 justify-center grid-flow-col border-2 border-black w-48 p-2 text-center content-center col-span-1 place-self-center md:place-self-auto'>
             <a href={`/playlist/${id}`}>{playlistTitles[id]}</a>
           </li>
         ))}

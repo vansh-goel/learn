@@ -115,7 +115,7 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ params }) => {
             {videoDetailsMap[item.videoId] ? (
                 <div className='grid wrap grid-col-1 grid-rows-2 grid-flow-row md:grid-col-8 md:grid-flow-col lg:grid-col-8 content-center py-2 lg:grid-rows-1 md:grid-rows-1'>
                 <img
-                    className='w-48 h-36 col-span-1 row-span-1 md:col-span-3 md:row-auto md:order-1 rounded-lg border-2 border-black/50 p-2 place-self-center lg:place-self-start md:place-self-start'
+                    className='w-48 h-36 col-span-1 row-span-1 md:col-span-3 md:row-auto md:order-1 rounded-lg border-2 border-black/50 p-2 place-self-center lg:place-self-start md:place-self-start dark:border-white'
                   src={videoDetailsMap[item.videoId].thumbnailURL}
                   alt="Video thumbnail"
                 />
