@@ -32,7 +32,7 @@ const Navbar = ( ) => {
     <nav className="flex items-center justify-between flex-1 mx-auto mt-4 border-white/70 w-[95%] sticky h-14 top-3 rounded-full inset-x-0 z-30 border-gray-200 bg-black/80 dark:bg-white/95 dark:text-black background-blur-lg transition-all px-5">
       <h1 className="border-b border-zinc-200 m-4 text-white dark:text-black font-mono font-semibold col-span-1 col-start-1">
         <Link href={'/'}>
-          Le/-\rn
+          le/-\rn
         </Link>
       </h1>
       <span id="Toggle-btn" className="flex items-center gap-2 justify-between col-span-1 col-start-2 dark:text-white">

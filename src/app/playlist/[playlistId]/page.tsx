@@ -4,6 +4,8 @@ import axios from 'axios';
 import Navbar from '@/components/Navbar';
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import { BarLoader } from 'react-spinners';
+import { Switch } from "@/components/ui/switch"
+
 
 
 interface PlaylistItem {
@@ -35,6 +37,7 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ params }) => {
   const [playlistData, setPlaylistData] = useState<PlaylistData | null>(null);
   const [playlistItems, setPlaylistItems] = useState<PlaylistItem[]>([]);
   const [videoDetailsMap, setVideoDetailsMap] = useState<Record<string, VideoDetails>>({});
+  const [watched, setWatched] = useState(false);
 
   useEffect(() => {
     if (playlistId) {
@@ -122,20 +125,21 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ params }) => {
         {playlistItems.map(item => (
             <li key={item.videoId} className='grid wrap grid-row-2 grid-flow-row md:grid-col-8 md:grid-flow-col content-center py-2'>
             {videoDetailsMap[item.videoId] ? (
-                <div className='grid wrap grid-col-1 grid-rows-2 grid-flow-row md:grid-col-8 md:grid-flow-col lg:grid-col-8 content-center py-2 lg:grid-rows-1 md:grid-rows-1'>
+                <div className='grid wrap grid-col-1 grid-rows-2 grid-flow-row md:grid-cols-8 md:grid-flow-col lg:grid-col-8 content-center py-2 lg:grid-rows-1 md:grid-rows-1'>
                 <img
                     className='w-48 h-36 col-span-1 row-span-1 md:col-span-3 md:row-auto md:order-1 rounded-lg border-2 border-black/50 p-2 place-self-center lg:place-self-start md:place-self-start dark:border-white'
                   src={videoDetailsMap[item.videoId].thumbnailURL}
                   alt="Video thumbnail"
                 />
                 <a
-                    className='p-2 col-span-1 row-span-1 md:col-span-5 md:order-2 content-center grid md:w-[100%] sm:w-[60%] text-center align-self-center place-self-center lg:place-self-center'
-                  href={`https://www.youtube.com/watch?v=${item.videoId}`}
+                    className='p-2 col-span-1 row-span-1 md:col-span-4 md:order-2 content-center grid md:w-[100%] sm:w-[60%] text-center align-self-center place-self-center lg:place-self-center'
+                  href={`/playlist/view/${videoDetailsMap[item.videoId].videoId}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {item.title}
                 </a>
+                <Switch className='col-span-1 order-3 place-self-center border-[2px] dark:border-gray-700 border-black' checked={watched}/>
               </div>
             ) : (
               <div>
