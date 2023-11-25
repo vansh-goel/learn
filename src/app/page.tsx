@@ -20,7 +20,7 @@ export function Home() {
           Keep Log of your <span className="text-stone-600 dark:text-stone-300">Courses</span>
         </h1>
         <p className="mt-10 max-w-prose text-black sm:text-lg dark:text-white">
-          "With learn, you can keep track of your courses, and keep a log of your progress. We help you collect all your favourite Youtube Playlists at one place, keep track of how much you have studied, and also reward a badge on course completion."
+          &quot;With learn, you can keep track of your courses, and keep a log of your progress. We help you collect all your favourite Youtube Playlists at one place, keep track of how much you have studied, and also reward a badge on course completion.&quot;
         </p>
       <Link className={buttonVariants({
           size: "lg",

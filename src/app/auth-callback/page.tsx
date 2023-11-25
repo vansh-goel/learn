@@ -29,7 +29,7 @@ const Page = () => {
             <div className="flex flex-col items-center gap-2">
                 <Loader2 className="h-8 w-8 animate-spin text-zinc-800" />
                 <h3 className="semi-bold text-xl">Setting Up Your Account</h3>
-                <p>You'll be redirected automatically</p>
+                <p>You&apos;ll be redirected automatically</p>
             </div>
         </div>
   )
