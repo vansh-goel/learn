@@ -25,7 +25,7 @@ const Home = () => {
       <Link className={buttonVariants({
           size: "lg",
           className: "mt-8"
-        })} href="/dashboard" target="_blank">
+        })} href="/api/auth/login" target="_blank">
           Dashboard <ArrowRight className="ml-2 h-5 w-5" size={20} />
       </Link>
       </div>
