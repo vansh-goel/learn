@@ -32,6 +32,7 @@ const Dashboard = () => {
   const [playlistIDs, setPlaylistIDs] = useState<string[]>([]);
   const [playlistLink, setPlaylistLink] = useState('');
   const [playlistDescription, setPlaylistDescription] = useState<string>('');
+  console.log(playlistLink)
 
     trpc.getPlaylists.useQuery(undefined, {
     onSuccess: (data) => {
@@ -64,7 +65,7 @@ const Dashboard = () => {
 
   const fetchPlaylistInfo = async () => {
     // Extract playlist ID from the playlist link
-    const match = playlistLink.match(/\/playlist\?list=(.*)/);
+    const match = playlistLink.match(/\/playlist\?list=([^&]+)/);
     if (match) {
       const newPlaylistID = match[1];
       const playlistInfoURL = `https://vid.puffyan.us/api/v1/playlists/${newPlaylistID}/`;

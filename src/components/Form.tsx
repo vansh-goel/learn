@@ -11,15 +11,14 @@ const Form: React.FC<FormProps> = ({ playlistLink, setPlaylistLink }) => {
   let playlistID = '';
   const [link, setLink] = useState<string>('');
   const router = useRouter();
-    const match = link.match(/\/playlist\?list=(.*)/);
-    if (match) {
-       playlistID = match[1];
-    }
+const match = link.match(/\/playlist\?list=([^&]+)/);
+if (match) {
+   playlistID = match[1];
+}
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setPlaylistLink(link);
     // router.push(`/playlist/${playlistID}`);
-    console.log(link);
     setLink("");
   };
 
