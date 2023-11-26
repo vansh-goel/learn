@@ -7,7 +7,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 
-export function Home() {
+const Home = () => {
   return (
     <div className="bg-gradient-to-r from-rose-100/50 to-teal-100/50 p-0 m-0 w-screen h-screen overflow-auto top-0 inset-0 dark:bg-[conic-gradient(at_top_left,_var(--tw-gradient-stops))] dark:from-black dark:via-black dark:to-black">
     <MaxWidthWrapper className="">
@@ -49,5 +49,4 @@ export function Home() {
     </div>
   )
 }
-
-export default Home;
+export default Home

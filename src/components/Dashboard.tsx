@@ -121,7 +121,7 @@ const Dashboard = () => {
       <Form playlistLink={playlistLink} setPlaylistLink={setPlaylistLink} />
       <ul className='grid gap-4 py-2 my-2 wrap grid-cols-1 md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-5 grid-flow-row'>
         {playlistIDs.map((id) => (
-        <ContextMenu>
+        <ContextMenu key={id}>
           <ContextMenuTrigger className='grid dark:border-gray-100 justify-center grid-flow-col border-2 border-black w-48 p-2 text-center content-center col-span-1 place-self-center md:place-self-auto'>
           <li key={id} className='grid justify-center grid-flow-col w-48 p-2 text-center content-center col-span-1 place-self-center md:place-self-auto'>
           <a href={`/playlist/${id}`}>{playlistTitles[id]}</a>
