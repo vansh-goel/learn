@@ -67,7 +67,7 @@ const Dashboard = () => {
     const match = playlistLink.match(/\/playlist\?list=(.*)/);
     if (match) {
       const newPlaylistID = match[1];
-      const playlistInfoURL = `https://inv.in.projectsegfau.lt/api/v1/playlists/${newPlaylistID}/`;
+      const playlistInfoURL = `https://vid.puffyan.us/api/v1/playlists/${newPlaylistID}/`;
       const response = await axios.get(playlistInfoURL);
       const playlistData = response.data;
       setPlaylistTitle(playlistData.title);
@@ -135,7 +135,6 @@ const Dashboard = () => {
                 </ContextMenuItem>
               </ContextMenuContent>
           </ContextMenu>
-
         ))}
       </ul>
     </MaxWidthWrapper>

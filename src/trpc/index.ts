@@ -70,5 +70,70 @@ export const appRouter = router({
         },
       });
   }),
+  createVideo: privateProcedure.input(
+    z.object({
+      videoId: z.string(),
+      playlistId: z.string(),
+      title: z.string(),
+      watched: z.boolean(),
+    })).mutation(async ({ input }) => {
+      return await db.video.create({
+        data: {
+          id: input.videoId,
+          playlistId: input.playlistId,
+          title: input.title,
+          watched: input.watched,
+        },
+      });
+  }),
+
+  watchVideo: privateProcedure.input(
+    z.object({
+      videoId: z.string(),
+      playlistId: z.string(),
+      watched: z.boolean(),
+    })).mutation(async ({ input }) => {
+      return await db.video.update({
+        where: {
+          id: input.videoId,
+        },
+        data: {
+          watched: input.watched,
+        },
+      });
+  }),
+
+getVideos: privateProcedure.input(
+  z.object({
+    playlistId: z.string(),
+  })).query(async ({ input }) => {
+    return await db.video.findMany({
+      where: {
+        playlistId: input.playlistId,
+      },
+      select: {
+        id: true,
+        title: true,
+        watched: true, // Include watched status in the response
+        playlistId: true,
+      },
+    });
+}),
+
+  getWatchedVideos: privateProcedure.input(
+    z.object({
+      id: z.string(),
+    })).query(async ({ input }) => {
+      return await db.video.findFirst({
+        where: {
+          id: input.id,
+        },
+        select: {
+          id: true,
+          watched: true, // Include watched status in the response
+          playlistId: true,
+        },
+      });
+  }),
 });
 export type AppRouter = typeof appRouter;

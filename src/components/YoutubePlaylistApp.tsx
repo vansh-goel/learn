@@ -40,7 +40,7 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ playlistID }) =
   }, [playlistID]);
 
   const fetchPlaylistInfo = async () => {
-    const playlistInfoURL = `https://inv.in.projectsegfau.lt/api/v1/playlists/${playlistID}/`;
+    const playlistInfoURL = `https://vid.puffyan.us/api/v1/playlists/${playlistID}/`;
 
     try {
       const response = await axios.get<PlaylistData>(playlistInfoURL);
@@ -54,7 +54,7 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ playlistID }) =
   };
 
   const fetchPlaylistItems = async () => {
-    const playlistItemsURL = `https://onion.tube/api/v1/playlists/${playlistID}?videos=all`;
+    const playlistItemsURL = `https://vid.puffyan.us/api/v1/playlists/${playlistID}?videos=all`;
 
     try {
       const response = await axios.get<{ videos: PlaylistItem[] }>(playlistItemsURL);
@@ -70,7 +70,7 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ playlistID }) =
   };
 
   const fetchVideoDetails = async (videoIDs: string[]) => {
-    const videoDetailsURLs = videoIDs.map(videoID => `https://inv.in.projectsegfau.lt/api/v1/videos/${videoID}/`);
+    const videoDetailsURLs = videoIDs.map(videoID => `https://vid.puffyan.us/api/v1/videos/${videoID}/`);
 
     try {
       const responses = await Promise.all(videoDetailsURLs.map(url => axios.get<VideoDetails>(url)));
@@ -78,7 +78,7 @@ const YouTubePlaylistApp: React.FC<YouTubePlaylistAppProps> = ({ playlistID }) =
 
       const updatedVideoDetailsMap: Record<string, VideoDetails> = { ...videoDetailsMap };
       videoDetailsData.forEach(videoDetails => {
-        const thumbnailURL = `https://inv.in.projectsegfau.lt/vi/${videoDetails.videoId}/hqdefault.jpg`;
+        const thumbnailURL = `https://vid.puffyan.us/vi/${videoDetails.videoId}/hqdefault.jpg`;
         updatedVideoDetailsMap[videoDetails.videoId] = { ...videoDetails, thumbnailURL };
       });
 
