@@ -69,8 +69,8 @@ useEffect(() => {
       <div className="grid place-content-center w-full h-full mt-12">
         <iframe
           id="ivplayer"
-          width="860"
-          height="480"
+          width="200"
+          height="80"
           className="border-2 border-black dark:border-white p-4 rounded-lg"
           src={`https://youtube.com/embed/${videoId}`}
           allowFullScreen

@@ -135,5 +135,11 @@ getVideos: privateProcedure.input(
         },
       });
   }),
+
+  checkLogin : privateProcedure.query(async ({ ctx }) => {
+    const { userId } = ctx;
+    return { userId };
+  }),
+
 });
 export type AppRouter = typeof appRouter;

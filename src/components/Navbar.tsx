@@ -6,6 +6,8 @@ import { Moon, Sun, ArrowRight } from "lucide-react"
 import { LoginLink, LogoutLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs"
 import { buttonVariants } from "@/components/ui/button"
 import Link from "next/link"
+import { useState, useEffect } from "react"
+import { trpc } from "@/app/_trpc/client"
  
 import { Button } from "@/components/ui/button"
 import {
@@ -26,8 +28,25 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
 
-const Navbar = ( ) => {
+
+  
+  const Navbar = ( ) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { theme,setTheme } = useTheme()
+
+  useEffect(() => {
+    const fetchLoginStatus = async () => {
+    try {
+      const result = await trpc.checkLogin.useQuery();
+      setIsLoggedIn(!!result.data?.userId); // Update isLoggedIn based on the result
+    } catch (error) {
+      console.error("Error fetching login status:", error);
+    }
+    };
+
+    fetchLoginStatus();
+  }, []);
+
   return (
     <nav className="flex items-center justify-between flex-1 mx-auto mt-4 border-white/70 w-[95%] sticky h-14 top-3 rounded-full inset-x-0 z-30 border-gray-200 bg-black/80 dark:bg-white/95 dark:text-black background-blur-lg transition-all px-5">
       <h1 className="border-b border-zinc-200 m-4 text-white dark:text-black font-mono font-semibold col-span-1 col-start-1">
@@ -81,11 +100,17 @@ const Navbar = ( ) => {
                   </RegisterLink>
               </li>
               <li>
-                  <LogoutLink>
-                    <Button variant="secondary" size="lg">
-                      Sign Out
-                    </Button>
-                  </LogoutLink>
+                  {isLoggedIn ? (
+                    <li>
+                      <LogoutLink
+                        className={buttonVariants({
+                          variant: "secondary",
+                          size: "lg",
+                        })}>
+                        Logout
+                      </LogoutLink>
+                    </li>
+                  ) : (null) }
               </li>
             </ul>
           </NavigationMenuContent>
