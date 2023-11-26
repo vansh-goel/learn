@@ -31,21 +31,17 @@ import {
 
   
   const Navbar = ( ) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { theme,setTheme } = useTheme()
+  const[isAuth, setIsAuth] = useState(false)
+  const {theme, setTheme } = useTheme()
 
-  useEffect(() => {
-    const fetchLoginStatus = async () => {
-    try {
-      const result = await trpc.checkLogin.useQuery();
-      setIsLoggedIn(!!result.data?.userId); // Update isLoggedIn based on the result
-    } catch (error) {
-      console.error("Error fetching login status:", error);
-    }
-    };
+      trpc.checkLogin.useQuery(undefined, {
+      onSuccess: (data) => {
+        if (data) {
+          setIsAuth(true)
+        }
+    },
+  })
 
-    fetchLoginStatus();
-  }, []);
 
   return (
     <nav className="flex items-center justify-between flex-1 mx-auto mt-4 border-white/70 w-[95%] sticky h-14 top-3 rounded-full inset-x-0 z-30 border-gray-200 bg-black/80 dark:bg-white/95 dark:text-black background-blur-lg transition-all px-5">
@@ -100,8 +96,8 @@ import {
                   </RegisterLink>
               </li>
               <li>
-                  {isLoggedIn ? (
-                    <li>
+                  {isAuth ? (
+                                        <li>
                       <LogoutLink
                         className={buttonVariants({
                           variant: "secondary",
@@ -110,7 +106,7 @@ import {
                         Logout
                       </LogoutLink>
                     </li>
-                  ) : (null) }
+                  ) : (null)}
               </li>
             </ul>
           </NavigationMenuContent>
