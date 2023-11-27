@@ -101,6 +101,7 @@ const Dashboard = () => {
   }
 
   const handleDeletePlaylist = async (playlistID: string) => {
+    console.log(playlistID)
     try {
       await deletePlaylistMutation.mutateAsync({ playlistId: playlistID });
       setPlaylistIDs((prevIDs) => prevIDs.filter((id) => id !== playlistID));

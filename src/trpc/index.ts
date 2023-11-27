@@ -58,17 +58,23 @@ export const appRouter = router({
         },
       });
   }),
-  deletePlaylist: privateProcedure.input(
-    z.object({
-      playlistId: z.string(),
-    })).mutation(async ({ ctx, input }) => {
-      const { userId } = ctx;
-      return await db.playlist.delete({
-        where: {
-            userId,
-            playlistId: input.playlistId,
-        },
-      });
+deletePlaylist: privateProcedure.input(
+  z.object({
+    playlistId: z.string(),
+  })).mutation(async ({ ctx, input }) => {
+    const { userId } = ctx;
+    // Delete videos associated with the playlist
+    await db.video.deleteMany({
+      where: {
+        playlistId: input.playlistId,
+      },
+    });
+    return await db.playlist.delete({
+      where: {
+        userId,
+        playlistId: input.playlistId,
+      },
+    });
   }),
   createVideo: privateProcedure.input(
     z.object({
